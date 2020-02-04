@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization; //  will allow us to actually authorize users.
-using Microsoft.AspNetCore.Identity; //  enables controller to interact with users from the DB
-using System.Threading.Tasks; //  so we can call async methods
-using System.Security.Claims; // important for using what is called Claim Based Authorization
+using Microsoft.AspNetCore.Authorization; 
+using Microsoft.AspNetCore.Identity; 
+using System.Threading.Tasks; 
+using System.Security.Claims; 
 
 namespace PierresTreats.Controllers
 {

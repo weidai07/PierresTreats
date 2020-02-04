@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PierresTreats.Models;
-//new code
 using Microsoft.AspNetCore.Identity;
 
 namespace PierresTreats
@@ -30,12 +29,10 @@ namespace PierresTreats
               .AddDbContext<PierresTreatsContext>(options => options
               .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
 
-            // Identity Code
             services.AddIdentity<ApplicationUser, IdentityRole>()
                       .AddEntityFrameworkStores<PierresTreatsContext>()
                       .AddDefaultTokenProviders();
 
-            // Password parameters for Identity  
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -53,7 +50,6 @@ namespace PierresTreats
 
             app.UseDeveloperExceptionPage();
 
-            //new code
             app.UseAuthentication();
 
             app.UseMvc(routes =>
