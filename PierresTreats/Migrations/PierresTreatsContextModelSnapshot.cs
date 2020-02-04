@@ -174,6 +174,22 @@ namespace PierresTreats.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("PierresTreats.Models.Flavor", b =>
+                {
+                    b.Property<int>("FlavorId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("FlavorId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Flavors");
+                });
+
             modelBuilder.Entity("PierresTreats.Models.Treat", b =>
                 {
                     b.Property<int>("TreatId")
@@ -195,33 +211,17 @@ namespace PierresTreats.Migrations
                     b.Property<int>("TreatFlavorId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("TreatId");
-
                     b.Property<int>("FlavorId");
+
+                    b.Property<int>("TreatId");
 
                     b.HasKey("TreatFlavorId");
 
-                    b.HasIndex("TreatId");
-
                     b.HasIndex("FlavorId");
 
+                    b.HasIndex("TreatId");
+
                     b.ToTable("TreatFlavor");
-                });
-
-            modelBuilder.Entity("PierresTreats.Models.Flavor", b =>
-                {
-                    b.Property<int>("FlavorId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("FlavorId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Flavors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -269,6 +269,13 @@ namespace PierresTreats.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("PierresTreats.Models.Flavor", b =>
+                {
+                    b.HasOne("PierresTreats.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("PierresTreats.Models.Treat", b =>
                 {
                     b.HasOne("PierresTreats.Models.ApplicationUser", "User")
@@ -278,22 +285,15 @@ namespace PierresTreats.Migrations
 
             modelBuilder.Entity("PierresTreats.Models.TreatFlavor", b =>
                 {
-                    b.HasOne("PierresTreats.Models.Treat", "Treat")
-                        .WithMany("Flavors")
-                        .HasForeignKey("TreatId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("PierresTreats.Models.Flavor", "Flavor")
                         .WithMany("Treats")
                         .HasForeignKey("FlavorId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("PierresTreats.Models.Flavor", b =>
-                {
-                    b.HasOne("PierresTreats.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("PierresTreats.Models.Treat", "Treat")
+                        .WithMany("Flavors")
+                        .HasForeignKey("TreatId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

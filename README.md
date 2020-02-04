@@ -23,7 +23,7 @@ Github - https://github.com/weidai07/PierresTreats.Solution
 
 ### Specification
 
-This program is designed to allow Pierre to market his treats and flavors. Users to this program are asked to create a log in authentication in order to be on file. From that point on, they can add the different flavors of treats they like to the list under their specific accounts. 
+This program is designed to allow Pierre to market his treats and flavors. Users to this program are asked to create a log in authentication in order to be on file. From that point on, they can add the different flavors of treats they like to the list under their specific accounts. The user will not be able to add or see their list of flavors until they have registered for an account and have logged in. When the user is finished adding to their account, they have the freedom to log out whenever.  
 
 ## Known Bugs
 

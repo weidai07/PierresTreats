@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PierresTreats.Migrations
 {
-    public partial class Authorization : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,19 +45,6 @@ namespace PierresTreats.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Treats",
-                columns: table => new
-                {
-                    TreatId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Treats", x => x.TreatId);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,6 +174,26 @@ namespace PierresTreats.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Treats",
+                columns: table => new
+                {
+                    TreatId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Treats", x => x.TreatId);
+                    table.ForeignKey(
+                        name: "FK_Treats_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TreatFlavor",
                 columns: table => new
                 {
@@ -199,16 +206,16 @@ namespace PierresTreats.Migrations
                 {
                     table.PrimaryKey("PK_TreatFlavor", x => x.TreatFlavorId);
                     table.ForeignKey(
-                        name: "FK_TreatFlavor_Treats_TreatId",
-                        column: x => x.TreatId,
-                        principalTable: "Treats",
-                        principalColumn: "TreatId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TreatFlavor_Flavors_FlavorId",
                         column: x => x.FlavorId,
                         principalTable: "Flavors",
                         principalColumn: "FlavorId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TreatFlavor_Treats_TreatId",
+                        column: x => x.TreatId,
+                        principalTable: "Treats",
+                        principalColumn: "TreatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -250,9 +257,9 @@ namespace PierresTreats.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TreatFlavor_TreatId",
-                table: "TreatFlavor",
-                column: "TreatId");
+                name: "IX_Flavors_UserId",
+                table: "Flavors",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TreatFlavor_FlavorId",
@@ -260,8 +267,13 @@ namespace PierresTreats.Migrations
                 column: "FlavorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flavors_UserId",
-                table: "Flavors",
+                name: "IX_TreatFlavor_TreatId",
+                table: "TreatFlavor",
+                column: "TreatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Treats_UserId",
+                table: "Treats",
                 column: "UserId");
         }
 
@@ -289,10 +301,10 @@ namespace PierresTreats.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Treats");
+                name: "Flavors");
 
             migrationBuilder.DropTable(
-                name: "Flavors");
+                name: "Treats");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
